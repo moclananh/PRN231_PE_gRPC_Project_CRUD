@@ -1,0 +1,49 @@
+﻿@{
+    MyProto.ProductList searchData = ViewBag.SearchData;
+    MyProto.CategoryList categoryData = ViewBag.CategoryData;
+}
+
+<form asp-controller="Products" asp-action="Search" method="get">
+    <div class="form-group">
+        <input type="text" name="query" placeholder="Enter search query" value="@ViewData["currentFilter"]" />
+        <button type="submit">Search</button>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Unit In Stock</th>
+            <th>Decription</th>
+            <th>Category</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in searchData.Product)
+        {
+            <tr>
+                <td>@item.ProductId</td>
+                <td>@item.ProductName</td>
+                <td>@item.UnitPrice</td>
+                <td>@item.UnitsInStock</td>
+                <td>@item.Description</td>
+
+                <td>
+                    @{
+                        var author = categoryData.Category.FirstOrDefault(a => a.CategoryId == item.CategoryId);
+                        string categoryName = (author != null) ? author.CategoryName : "Not Found";
+                    }
+                    <p>@categoryName</p>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

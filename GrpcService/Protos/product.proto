@@ -1,0 +1,63 @@
+﻿syntax = "proto3";
+
+   option csharp_namespace = "MyProto"; // tu dinh nghia namespace de tach roi
+
+   service GrpcProduct{
+	   rpc GetAll (Empty) returns (ProductList);
+	   rpc GetProductById (IDRequest) returns (Product);
+	   rpc CreateProduct(CreateProductRequest) returns (Product);
+	   rpc UpdateProduct(UpdateProductRequest) returns (Product);
+	   rpc DeleteProduct(IDRequest) returns (Empty); 
+	   rpc GetAllCategory (Empty) returns (CategoryList);
+	    rpc SearchProduct(SearchRequest) returns (ProductList);
+   }
+   
+   message SearchRequest {
+    string query = 1; 
+	}
+
+   message Empty{}
+
+   message Product{
+	   int32 ProductId = 1;
+	   string ProductName = 2;
+	   int32 CategoryId = 3;
+	   int32 UnitPrice = 4;
+	   int32 UnitsInStock = 5;
+	   string Description = 6;
+   }
+
+      message Category{
+	   int32 CategoryId = 1;
+	   string CategoryName = 2;
+	   
+   }
+
+
+   message ProductList{
+	   repeated Product product = 1;
+   }
+
+     message CategoryList{
+	   repeated Category category = 1;
+   }
+
+   message IDRequest{
+	   int32 Id = 1;
+   }
+   message CreateProductRequest {
+    string ProductName = 1;
+    int32 CategoryId = 2;
+    int32 UnitPrice = 3;
+    int32 UnitsInStock = 4;
+    string Description = 5;
+}
+
+message UpdateProductRequest {
+    int32 ProductId = 1;
+    string ProductName = 2;
+    int32 CategoryId = 3;
+    int32 UnitPrice = 4;
+    int32 UnitsInStock = 5;
+    string Description = 6;
+}

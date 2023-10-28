@@ -1,0 +1,54 @@
+﻿@model MyProto.Product
+
+@{
+    ViewData["Title"] = "Details";
+    MyProto.Product data = ViewBag.Data;
+    MyProto.CategoryList CategoryData = ViewBag.CategoryData;
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductName)
+        </dt>
+        <dd class="col-sm-10">
+            @data.ProductName
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UnitPrice)
+        </dt>
+        <dd class="col-sm-10">
+            @data.UnitPrice
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UnitsInStock)
+        </dt>
+        <dd class="col-sm-10">
+            @data.UnitsInStock
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @data.Description
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CategoryId)
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var category = CategoryData.Category.FirstOrDefault(a => a.CategoryId == data.CategoryId);
+                string categoryName = (category != null) ? category.CategoryName : "Not Found";
+            }
+            <p>Category: @categoryName</p>
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@data.ProductId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
